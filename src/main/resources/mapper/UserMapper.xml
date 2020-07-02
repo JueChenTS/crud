@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.juechen.crud.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.juechen.crud.entities.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getUsers" resultMap="BaseResultMap">
+        select id,name,password from user;
+    </select>
+
+    <select id="getUserById" parameterType="int" resultMap="BaseResultMap">
+        select id,name,password from user where id=#{id};
+    </select>
+    
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(name,password) values(#{name},#{password});
+    </insert>
+
+    <delete id="delUserById" parameterType="int">
+        delete from user where id=#{id};
+    </delete>
+
+    <update id="updatePasswordById" parameterType="User">
+        update user set password=#{password} where id=#{id}
+    </update>
+</mapper>
